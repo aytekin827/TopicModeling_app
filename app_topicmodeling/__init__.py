@@ -11,17 +11,16 @@ from flask_session import Session
 # if __name__=="__main__":
 #     app.run(debug=True)
 
-sess = Session()
 
 def create_app():
     """
     create_app 함수는 어플리케이션 펙토리에 따른 패턴입니다. controller
     """
     app = Flask(__name__)
-    sess.init_app(app)
-
-    app.secret_key = '*****'
+    app.secret_key = 'somthingSecretKeypleaseworkmyapplication'
     app.config['SESSION_TYPE'] = 'filesystem'
+    sess = Session()
+    sess.init_app(app)
 
 
     from app_topicmodeling.routes import main_route, funcs_route
