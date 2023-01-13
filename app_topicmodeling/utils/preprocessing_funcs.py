@@ -7,7 +7,7 @@ import re
 def text_cleaning(docs):
     cleaned_text = []
     # 한국어를 제외한 글자를 제거하는 함수.
-    print(docs)
+    docs = sum(docs, [])
     for doc in docs:
         doc = re.sub("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", doc)
         cleaned_text.append(doc)
@@ -32,6 +32,7 @@ def define_stopwords(path):
 
     return SW
 
+SW = define_stopwords('app_topicmodeling\data\korea_stopwords.txt')
 
 def text_tokenizing(corpus, tokenizer):
     
@@ -40,20 +41,20 @@ def text_tokenizing(corpus, tokenizer):
     
 
     if tokenizer == "noun":
-        for n in tqdm(range(len(corpus)), desc="Preprocessing"):
+        for n in range(len(corpus)):
             token_text = mecab.nouns(corpus[n])
             token_text = [word for word in token_text if word not in SW and len(word) > 1]
                 
             token_corpus.append(token_text)
             
     elif tokenizer == "morph":
-        for n in tqdm(range(len(corpus)), desc="Preprocessing"):
+        for n in range(len(corpus)):
             token_text = mecab.morphs(corpus[n])
             token_text = [word for word in token_text if word not in SW and len(word) > 1]
             token_corpus.append(token_text)
 
     elif tokenizer == "word":
-        for n in tqdm(range(len(corpus)), desc="Preprocessing"):
+        for n in range(len(corpus)):
             token_text = corpus[n].split()
             token_text = [word for word in token_text if word not in SW and len(word) > 1]
             token_corpus.append(token_text)

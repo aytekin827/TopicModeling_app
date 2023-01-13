@@ -35,7 +35,7 @@
             <div class="container px-4 px-lg-5 text-center">
                 <h1 class="mb-1">Topic Modeling</h1>
                 <h3 class="mb-5"><em>LDA모델을 이용한 토픽모델링 분석</em></h3>
-                <a class="btn btn-primary btn-xl" href="#about"><strong>토픽모델링 분석하러 가기</strong></a>
+                <a class="btn btn-primary btn-xl" href="#about"><strong>토픽모델링 시작하기</strong></a>
             </div>
         </header>
         <!-- About-->
@@ -50,12 +50,12 @@
                             !
                         </p>
                         <p>
-                            <form method="POST" action="/api/analyze">
+                            <form method="POST" action="/api/crawling">
                                 <div class="form-group">
                                   <div class="form-group">
                                     <input type="text" name="query_str" style="margin-bottom:15px" class="col-md-3" placeholder="검색어를 입력하세요">
                                   </div>
-                                <input type="submit" class="btn btn-primary" herf='#services' value="분석하기" />
+                                <input type="submit" class="btn btn-primary" herf='#services' value="크롤링하기" />
                               </form>
                             {% if alert_msg %}
                             <p>
@@ -74,61 +74,73 @@
             <div class="container px-4 px-lg-5">
                 <div class="content-section-heading">
                     <h3 class="text-secondary mb-0">Data</h3>
-                    <h2 class="mb-5">Crawled Data</h2>
+                    <h2>Crawled Data</h2>
+                    <p class="lead mb-5">
+                        크롤링 된 데이터 중 처음 데이터만 표시됩니다.
+                    </p >
+
                 </div>
+                {% if session['flag'] != 0 %}
+                <p class="lead mb-3">
+                    검색어 : {{ session['query_str'] }}
+                </p >
+                {% endif %}
                 <p class="lead mb-5">
-                    크롤링 된 데이터가 표시되는 부분입니다.
-                    {% if contents %}
-                    <p>
-                        {{ contents }}
-                    </p>
+                <strong>
+                    제목 : {{ session['titles'][0][0] }}
+                </strong>
+                <p>
+                    {% if session['flag'] == 1 %}
+                    [original_text] <br>
+                    {{ session['contents'][0][0] }}
+                    {% elif session['flag'] == 2 %}
+                    [cleaned_text] <br>
+                    {{ session['cleaned_text'][0] }}
+                    {% elif session['flag'] == 3 %}
+                    [tokenized_text] <br>
+                    {{ session['tokenized_text'][0] }}
                     {% endif %}
+
                 </p>
-                <!-- <div class="row gx-4 gx-lg-5">
-                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-screen-smartphone"></i></span>
-                        <h4><strong>Responsive</strong></h4>
-                        <p class="text-faded mb-0">Looks great on any screen size!</p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <form method="POST" action="/api/original">
+                            <button type="submit" class="btn btn-success">Original Text</button>
+                        </form>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-pencil"></i></span>
-                        <h4><strong>Redesigned</strong></h4>
-                        <p class="text-faded mb-0">Freshly redesigned for Bootstrap 5.</p>
+                    <div class="col-sm-4">
+                        <form method="POST" action="/api/preprocessing_cleaning">
+                            <button type="submit" class="btn btn-success">Cleaned Text</button>
+                        </form>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
-                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-like"></i></span>
-                        <h4><strong>Favorited</strong></h4>
-                        <p class="text-faded mb-0">
-                            Millions of users
-                            <i class="fas fa-heart"></i>
-                            Start Bootstrap!
-                        </p>
+                    <div class="col-sm-4">
+                        <form method="POST" action="/api/preprocessing_tokenizing">
+                            <button type="submit" class="btn btn-success">Tokenized Text</button>
+                        </form>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-mustache"></i></span>
-                        <h4><strong>Question</strong></h4>
-                        <p class="text-faded mb-0">I mustache you a question...</p>
-                    </div> -->
                 </div>
+
             </div>
         </section>
         <!-- Callout-->
         <section class="callout">
             <div class="container px-4 px-lg-5 text-center">
                 <h2 class="mx-auto mb-5">
-                    Welcome to
-                    <em>your</em>
-                    next website!
+                    Finally Start<br>
+                    <em>Topic Modeling</em>
+                    Let's gogo!!
                 </h2>
-                <a class="btn btn-primary btn-xl" href="https://startbootstrap.com/theme/stylish-portfolio/">Download Now!</a>
+                <form method="POST" action="/api/analyze">
+                    <button type="submit" class="btn btn-primary btn-xl">토픽모델링 분석하기</button>
+                </form>
             </div>
         </section>
         <!-- Portfolio-->
         <section class="content-section" id="portfolio">
             <div class="container px-4 px-lg-5">
                 <div class="content-section-heading text-center">
-                    <h3 class="text-secondary mb-0">Portfolio</h3>
-                    <h2 class="mb-5">Recent Projects</h2>
+                    <h3 class="text-secondary mb-0">analyze</h3>
+                    <h2 class="mb-5">result</h2>
                 </div>
                 <div class="row gx-0">
                     <div class="col-lg-6">
