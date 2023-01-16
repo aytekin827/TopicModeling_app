@@ -4,11 +4,6 @@ from app_topicmodeling.utils.preprocessing_funcs import text_cleaning, text_toke
 from app_topicmodeling.utils.analyze_funcs import build_doc_term_mat, analyze_topic, print_topic_words, visualize
 from string import punctuation
 
-# from height_app.services 
-# from height_app.models import user_model, parents_model, contries_model
-# from height_app.utils import main_funcs
-
-
 bp = Blueprint('funcs', __name__)
 
 
@@ -26,16 +21,26 @@ def news_crawling():
     if query_str == '':
         return redirect(url_for('main.index', msg_code=0)+"#about")
     else: 
-      titles, contents = crawling_naver_news(query_str,1)
+        # 10번 페이지까지 옮겨가면서 네이버 뉴스를 크롤링한다.
+      titles, contents, num_crawled_news = crawling_naver_news(query_str,10)
       
-
       session['flag'] = 1 # original_flag = 1
       session['titles'] = titles
       session['contents'] = contents
       session['query_str'] = query_str
+      session['num_crawled_news'] = num_crawled_news
 
       print(session['flag'])
       return redirect(url_for('main.index')+"#services")
+
+@bp.route('/clear', methods=['POST'])
+def clear_text():
+    """
+    clear text
+    """
+    session['flag'] = 0 # cleaned_flag = 2
+
+    return redirect(url_for('main.index')+"#services")
 
 @bp.route('/original', methods=['POST'])
 def original_text():
@@ -91,7 +96,8 @@ def analyze():
     model = analyze_topic(corpus, dictionary, 3)
 
     data = visualize(model,corpus,dictionary)
-    print(data)
+    print('----'*50)
+    print('analyze finished!!!')
     return redirect(url_for('main.index')+"#portfolio")
 
 

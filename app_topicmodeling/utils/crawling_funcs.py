@@ -7,8 +7,9 @@ import time
 
 
 
-def crawling_naver_news(query_str, news_page=100):
+def crawling_naver_news(query_str, news_page=10):
 
+    
     # 네이버 개발자 api를 통해 뉴스기사 크롤링
     client_id = "Kd4AD8tY6u5ibXNgOzU6"
     client_secret = "HxVwEez24f"
@@ -30,6 +31,7 @@ def crawling_naver_news(query_str, news_page=100):
             print("Error Occurred")
 
     # 네이버 뉴스만 골라내는 과정
+    cnt = 0
     naver_news_link = []
     for page in news_data:
 
@@ -39,6 +41,7 @@ def crawling_naver_news(query_str, news_page=100):
             link = item['link']
             if 'naver' in link:
                 page_news_link.append(link)
+                cnt += 1
 
         naver_news_link.append(page_news_link)
 
@@ -97,8 +100,8 @@ def crawling_naver_news(query_str, news_page=100):
         
         print('====='*20)
         print()
-    
-    return naver_news_title, naver_news_content
+    print('총 {}개의 네이버뉴스가 크롤링 되었습니다.'.format(cnt))
+    return naver_news_title, naver_news_content, cnt
 
 # # 형태소 분석 들어가기
 # mecab = Mecab('C:\mecab\mecab-ko-dic')

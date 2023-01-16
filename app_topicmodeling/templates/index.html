@@ -43,11 +43,9 @@
             <div class="container px-4 px-lg-5 text-center">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-10">
-                        <h2>Topic Modeling is the perfect theme for your next project!</h2>
+                        <h2>Topic Modeling 제목</h2>
                         <p class="lead mb-5">
-                            This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
-                            <a href="https://unsplash.com/">Unsplash</a>
-                            !
+                            <a href="https://ko.wikipedia.org/wiki/%ED%86%A0%ED%94%BD_%EB%AA%A8%EB%8D%B8">토픽모델링 </a>설명내용 간단히 쓰기
                         </p>
                         <p>
                             <form method="POST" action="/api/crawling">
@@ -57,6 +55,12 @@
                                   </div>
                                 <input type="submit" class="btn btn-primary" herf='#services' value="크롤링하기" />
                               </form>
+
+                              <div class="col-sm">
+                                <form method="POST" action="/api/clear">
+                                    <button type="submit" class="btn btn-secondary btn-sm">clear Text</button>
+                                </form>
+                            </div>
                             {% if alert_msg %}
                             <p>
                                 <div class="alert alert-{{ alert_msg.type }}" role="alert">
@@ -75,33 +79,36 @@
                 <div class="content-section-heading">
                     <h3 class="text-secondary mb-0">Data</h3>
                     <h2>Crawled Data</h2>
+                {% if session['flag'] != 0 %}
                     <p class="lead mb-5">
-                        크롤링 된 데이터 중 처음 데이터만 표시됩니다.
+                        총 {{ session['num_crawled_news'] }} 개의 네이버뉴스가 크롤링 되었으며 
+                        <br>전체 크롤링 된 네이버뉴스 중 처음 데이터만 표시됩니다.
                     </p >
 
                 </div>
-                {% if session['flag'] != 0 %}
                 <p class="lead mb-3">
                     검색어 : {{ session['query_str'] }}
                 </p >
-                {% endif %}
                 <p class="lead mb-5">
-                <strong>
-                    제목 : {{ session['titles'][0][0] }}
-                </strong>
-                <p>
-                    {% if session['flag'] == 1 %}
-                    [original_text] <br>
-                    {{ session['contents'][0][0] }}
-                    {% elif session['flag'] == 2 %}
-                    [cleaned_text] <br>
-                    {{ session['cleaned_text'][0] }}
-                    {% elif session['flag'] == 3 %}
-                    [tokenized_text] <br>
-                    {{ session['tokenized_text'][0] }}
-                    {% endif %}
-
+                    <strong>
+                        제목 : {{ session['titles'][0][0] }}
+                    </strong>
+                    <p>
+                        
+                        {% if session['flag'] == 1 %}
+                        [original_text] <br>
+                        {{ session['contents'][0][0] }}
+                        {% elif session['flag'] == 2 %}
+                        [cleaned_text] <br>
+                        {{ session['cleaned_text'][0] }}
+                        {% elif session['flag'] == 3 %}
+                        [tokenized_text] <br>
+                        {{ session['tokenized_text'][0] }}
+                        {% endif %}
+                    
                 </p>
+                {% endif %}
+
                 <div class="row">
                     <div class="col-sm-4">
                         <form method="POST" action="/api/original">
@@ -131,94 +138,24 @@
                     Let's gogo!!
                 </h2>
                 <form method="POST" action="/api/analyze">
-                    <button type="submit" class="btn btn-primary btn-xl">토픽모델링 분석하기</button>
+                    <button type="submit" class="btn btn-primary btn-xl">분석결과 확인하기</button>
                 </form>
             </div>
         </section>
-        <!-- Portfolio-->
-        <section class="content-section" id="portfolio">
-            <div class="container px-4 px-lg-5">
-                <div class="content-section-heading text-center">
-                    <h3 class="text-secondary mb-0">analyze</h3>
-                    <h2 class="mb-5">result</h2>
-                </div>
-                <div class="row gx-0">
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <div class="caption-content">
-                                    <div class="h2">Stationary</div>
-                                    <p class="mb-0">A yellow pencil with envelopes on a clean, blue backdrop!</p>
-                                </div>
-                            </div>
-                            <img class="img-fluid" src="static/assets/img/portfolio-1.jpg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <div class="caption-content">
-                                    <div class="h2">Ice Cream</div>
-                                    <p class="mb-0">A dark blue background with a colored pencil, a clip, and a tiny ice cream cone!</p>
-                                </div>
-                            </div>
-                            <img class="img-fluid" src="static/assets/img/portfolio-2.jpg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <div class="caption-content">
-                                    <div class="h2">Strawberries</div>
-                                    <p class="mb-0">Strawberries are such a tasty snack, especially with a little sugar on top!</p>
-                                </div>
-                            </div>
-                            <img class="img-fluid" src="static/assets/img/portfolio-3.jpg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <div class="caption-content">
-                                    <div class="h2">Workspace</div>
-                                    <p class="mb-0">A yellow workspace with some scissors, pencils, and other objects.</p>
-                                </div>
-                            </div>
-                            <img class="img-fluid" src="static/assets/img/portfolio-4.jpg" alt="..." />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Call to Action-->
-        <section class="content-section bg-primary text-white">
-            <div class="container px-4 px-lg-5 text-center">
-                <h2 class="mb-4">The buttons below are impossible to resist...</h2>
-                <a class="btn btn-xl btn-light me-4" href="#!">Click Me!</a>
-                <a class="btn btn-xl btn-dark" href="#!">Look at Me!</a>
-            </div>
-        </section>
-        <!-- Map-->
-        <!-- <div class="map" id="contact">
-            <iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
-            <br />
-            <small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a></small>
-        </div> -->
-        <!-- Footer-->
         <footer class="footer text-center">
             <div class="container px-4 px-lg-5">
                 <ul class="list-inline mb-5">
                     <li class="list-inline-item">
-                        <a class="social-link rounded-circle text-white mr-3" href="#!"><i class="icon-social-facebook"></i></a>
+                        <a class="social-link rounded-circle text-white mr-3" href="https://aytekin.tistory.com/" target="_blank"><i class="fa-solid fa-house"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="social-link rounded-circle text-white mr-3" href="#!"><i class="icon-social-twitter"></i></a>
+                        <a class="social-link rounded-circle text-white mr-3" href="mailto:"mjeong827@gmail.com"><i class="fab fa-google fa-lg"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="social-link rounded-circle text-white" href="#!"><i class="icon-social-github"></i></a>
+                        <a class="social-link rounded-circle text-white" href="https://github.com/aytekin827" target="_blank"><i class="icon-social-github"></i></a>
                     </li>
                 </ul>
-                <p class="text-muted small mb-0">Copyright &copy; Your Website 2022</p>
+                <p class="text-muted small mb-0">Copyright &copy; Aytekin 2023</p>
             </div>
         </footer>
         <!-- Scroll to Top Button-->
@@ -227,6 +164,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="static/js/scripts.js"></script>
+        <script src="https://kit.fontawesome.com/776c43c4d4.js" crossorigin="anonymous"></script>
     
     </body>
 </html>

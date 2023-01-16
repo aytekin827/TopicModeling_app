@@ -30,4 +30,5 @@ def print_topic_words(model):
 
 def visualize(model, corpus, dictionary):
     data = pyLDAvis.gensim.prepare(model, corpus, dictionary)
+    pyLDAvis.show(data)
     return data
